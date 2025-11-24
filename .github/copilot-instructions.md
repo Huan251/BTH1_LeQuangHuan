@@ -4,6 +4,7 @@
 
 This is an **Express.js REST API** built with a layered architecture using modern Node.js (ES modules). The data layer is transitional—currently using mock data (`model/user.js`), but designed to support both MongoDB and MySQL via service connectors.
 
+
 ### Core Layers
 - **Routes** (`routes/api.js`): Express Router defining API endpoints
 - **Controllers** (`controllers/*.js`): Request handlers that parse input and call services
@@ -12,6 +13,7 @@ This is an **Express.js REST API** built with a layered architecture using moder
 - **Model** (`model/user.js`): Mock data store with hardcoded user array
 - **Middlewares** (`middlewares/index.js`): Global error handling, response timing, JSON validation
 - **Helpers** (`helpers/response.js`): Standard response formatters
+
 
 ### Current State
 The app is in **development/learning phase**: Controllers directly use mock data from `model/user.js` instead of calling repository/service layer. Future refactoring should wire controllers to actual database repositories.
