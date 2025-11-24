@@ -1,36 +1,32 @@
-const { successResponse, errorResponse } = require('../helpers/response')
 
-/**
- * @param {import('../index').AppContext} ctx
- */
-const detail = async (ctx) => {
-  try {
-    // get email from query param
-    const query = ctx.query || {}
-    if (!query.email) {
-      return ctx.badRequest(
-        errorResponse(400, 'Email param required')
-      )
-    }
-
-    // get from repository
-    const user = await ctx.repo.user.getUserByEmail(query.email)
-    if (user) {
-      return ctx.ok(
-        successResponse(user)
-      )
-    }
-
-    // throw error on non exist data
-    return ctx.badRequest(
-      errorResponse(400, 'User not found')
-    )
-  } catch (err) {
-    console.error(err)
-    return ctx.throw(err.error.code, err)
+  import { users} from '../model/user.js';
+  export const getAllUsers = (req, res) => {
+  res.status(200).json(users);
   }
-}
-
-module.exports = {
-  detail
-}
+  // lấy theo id
+  export const getUserById = (req, res) => {
+  const id = parseInt(req.params.id);
+  const user = users.find(u => u.id === id); 
+  if (user) {
+    res.status(200).json(user);
+  } else {
+    res.status(404).json({ message: 'User not found' });
+  }  }
+  // lấy theo tên
+  export const getUserByName = (req, res) => {
+    const name = req.params.name.toLowerCase(); 
+    const user = users.find(u => u.name.toLowerCase() === name); 
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }  }
+  // lấy theo email
+  export const getUserByEmail = (req, res) => {
+    const email = req.params.email.toLowerCase(); 
+    const user = users.find(u => u.email.toLowerCase() === email); 
+    if (user) {
+      res.status(200).json(user);
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }  }
